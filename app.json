@@ -24,7 +24,7 @@
       "url": "https://github.com/heroku/heroku-buildpack-python"
     },
     {
-      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+      "url": "https://github.com/interconnectit/heroku-buildpack-ffmpeg"
     }
   ],  
    "env": {
