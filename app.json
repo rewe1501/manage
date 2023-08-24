@@ -51,7 +51,7 @@
       "OWNER_ID": {
          "description": "Your user ID as an integer.",
          "required": true,
-         "value": "902478883"
+         "value": "5063062493"
      },
 
       "STRING_SESSION": {
@@ -61,7 +61,7 @@
       },
       "HEROKU_API_KEY": {
         "description": "Your Heroku API key, get it from 'https://dashboard.heroku.com/account'",
-        "value": ""
+        "value": "455d37a2-a1ab-4eb1-8fbe-c39a10862080"
       },
       "HEROKU_APP_NAME": {
         "description": "Enter the Heroku app name here (Must an exact same name with your input above).",
@@ -69,17 +69,17 @@
       },
       "BOT_USERNAME": {
          "description": "username of your bot without the @",
-         "value": "Dark_musikbot"
+         "value": "KazuxxRobot"
       },
 
       "BOT_ID": {
          "description": "to get your bot_id using other bot or userbot",
-         "value": ""
+         "value": "6417202271"
       },
 
       "OWNER_USERNAME": {
          "description": "Your username without the @",
-         "value": "kenapatagkazu"
+         "value": "disinikazu"
       },
       "SUPPORT_CHAT": {
          "description": "Your Telegram support group chat username where your users will go and bother you with shit But be like: MyGroupChatUsernameBlah. If this ever points to masha support than consider you made an enemy.",
@@ -129,7 +129,7 @@
       "DEV_USERS": {
          "description": "ID of users who are Devs of your bot (can use /py etc.). If you are a noob and would come and bother Masha support then keep the current ID's here at they are and add yours.",
          "required": false,
-         "value": "902478883"
+         "value": "5063062493"
      },
         "ARQ_API": {
             "description": "Get this from @ARQRobot.",
