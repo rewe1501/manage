@@ -24,22 +24,22 @@ async def carbon_func(_, message):
     carbon.close()
 
 
-@pbot.on_message(filters.command("hikariinfo"))
+@pbot.on_message(filters.command("kazuinfo"))
 async def repo(_, message):
     await message.reply_text(
-        f"""🌺 **Hey Saya Hikari Robot** 
-**ᴏᴡɴᴇʀ :** [ʀᴇxᴧ](https://t.me/JustRex)**
+        f"""🌺 **Hey Saya Kazu Robot** 
+**ᴏᴡɴᴇʀ :** [ᴋᴀᴢᴜ](https://t.me/disinikazu)**
 **ᴘʏᴛʜᴏɴ ᴠᴇʀsɪᴏɴ :** `{y()}`
 **ʟɪʙʀᴀʀʏ ᴠᴇʀsɪᴏɴ :** `{o}`
 **ᴛᴇʟᴇᴛʜᴏɴ ᴠᴇʀsɪᴏɴ :** `{s}`
 **ᴘʏʀᴏɢʀᴀᴍ ᴠᴇʀsɪᴏɴ :** `{z}`
-**ʜɪᴋᴀʀɪ ʀᴏʙᴏᴛ ᴍᴀɴᴀɢᴇ ᴅᴀɴ ᴍᴜsɪᴄ.**
+**ᴋᴀᴢᴜ ʀᴏʙᴏᴛ ᴍᴀɴᴀɢᴇ ᴅᴀɴ ᴍᴜsɪᴄ.**
 """,
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton("ᴄʜᴀɴɴᴇʟ", url="https://t.me/tirexgugel"), 
-                    InlineKeyboardButton("ɢʀᴏᴜᴘ", url="https://t.me/rexaprivateroom")
+                    InlineKeyboardButton("ᴄʜᴀɴɴᴇʟ", url="https://t.me/Html12text"), 
+                    InlineKeyboardButton("ɢʀᴏᴜᴘ", url="https://t.me/KazuSupportGrp")
                 ]
             ]
         ),
