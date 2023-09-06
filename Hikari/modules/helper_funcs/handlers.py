@@ -7,7 +7,7 @@ from telegram.ext import CommandHandler, MessageHandler, RegexHandler, Filters
 from pyrate_limiter import (
     BucketFullException,
     Duration,
-    RequestRate,
+    #RequestRate,
     Limiter,
     MemoryListBucket,
 )
@@ -33,7 +33,7 @@ class AntiSpam:
             + (TIGERS or [])
         )
         # Values are HIGHLY experimental, its recommended you pay attention to our commits as we will be adjusting the values over time with what suits best.
-        Duration.CUSTOM = 15  # Custom duration, 15 seconds
+        Duration.CUSTOM = 20  # Custom duration, 20 seconds
         self.sec_limit = RequestRate(6, Duration.CUSTOM)  # 6 / Per 15 Seconds
         self.min_limit = RequestRate(20, Duration.MINUTE)  # 20 / Per minute
         self.hour_limit = RequestRate(100, Duration.HOUR)  # 100 / Per hour
