@@ -297,12 +297,12 @@ TIGERS = list(TIGERS)
 
 # Load at end to ensure all prev variables have been set
 #from Hikari.modules.helper_funcs.handlers import (
-    CustomCommandHandler,
-    CustomMessageHandler,
-    CustomRegexHandler,
+    #CustomCommandHandler,
+    #CustomMessageHandler,
+    #CustomRegexHandler,
 )
 
 # make sure the regex handler can take extra kwargs
-tg.RegexHandler = CustomRegexHandler
-tg.CommandHandler = CustomCommandHandler
-tg.MessageHandler = CustomMessageHandler
+#tg.RegexHandler = CustomRegexHandler
+#tg.CommandHandler = CustomCommandHandler
+#tg.MessageHandler = CustomMessageHandler
