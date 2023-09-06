@@ -45,17 +45,12 @@ class AntiSpam:
 
     # Values are HIGHLY experimental, its recommended you pay attention to our commits as we will be adjusting the values over time with what suits best.
         Duration.CUSTOM = 6  # Custom duration, 20 seconds
-        self.sec_limit = Rate(6, Duration.CUSTOM)  # 6 / Per 15 Seconds
-        self.min_limit = Rate(20, Duration.MINUTE)  # 20 / Per minute
-        self.hour_limit = Rate(100, Duration.HOUR)  # 100 / Per hour
-        self.daily_limit = Rate(1000, Duration.DAY)  # 1000 / Per day
-        self.limiter = Limiter(
-            self.sec_limit,
-            self.min_limit,
-            self.hour_limit,
-            self.daily_limit,
-            bucket=InMemoryBucket,
-        )
+        hourly_rate = Rate(500, Duration.HOUR) # 500 requests per hour
+        daily_rate = Rate(1000, Duration.DAY) # 1000 requests per day
+        monthly_rate = Rate(10000, Duration.WEEK * 4) # 10000 requests per month
+
+        rates = [hourly_rate, daily_rate, monthly_rate]
+        basic_bucket = InMemoryBucket(rates)
 
     def check_user(self, user):
         """
