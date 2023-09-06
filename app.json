@@ -31,17 +31,22 @@
       "TOKEN": {
          "description": "Your bot token. Get one from @BotFather duh",
          "required": true,
-         "value": ""
+         "value": "6417202271:AAGGeOlIvOGzwG4Hi4Qoj5xGoQsmpcWehN4"
       },
       "API_ID": {
          "description": "Get API_ID from my.telegram.org used for telethon based modules.",
          "required": true,
-         "value": ""
+         "value": "26987250"
       },
       "API_HASH": {
          "description": "Get API_HASH from my.telegram.org used for telethon based modules.",
          "required": true,
-         "value": ""
+         "value": "dd3d9c1d6f3db707a983344fab5a9335"
+      },
+      "DATABASE_URL": {
+         "description": "Database Postgres.",
+         "required": true,
+         "value": "postgres://vhnnaczmzfneaw:a7682de86d39a6baddd47a38bf8a68b846a94379e2ec9eac1f8be7b2e3e9056b@ec2-54-228-98-132.eu-west-1.compute.amazonaws.com:5432/dde0kvqneh9nlf"
       },    
       "SQLALCHEMY_DATABASE_URI": {
          "description": "Your postgres sql db, empty this field if you dont have one.",
