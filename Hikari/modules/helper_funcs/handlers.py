@@ -4,13 +4,23 @@ from Hikari import DEV_USERS, DRAGONS, DEMONS, TIGERS, WOLVES
 
 from telegram import Update
 from telegram.ext import CommandHandler, MessageHandler, RegexHandler, Filters
-from pyrate_limiter import (
-    BucketFullException,
-    Duration,
-    RequestRate,
-    Limiter,
-    MemoryListBucket,
-)
+from pyrate_limiter import Duration, Rate, InMemoryBucket, Limiter, BucketFullException
+
+rate = Rate(5, Duration.SECOND * 2)
+limiter = Limiter(rate)
+
+# Or you can pass multiple rates
+# rates = [Rate(5, Duration.SECOND * 2), Rate(10, Duration.MINUTE)]
+# limiter = Limiter(rates)
+
+for request in range(6):
+    try:
+        limiter.try_acquire(request)
+    except BucketFullException as err:
+        print(err)
+        print(err.meta_info)
+# Bucket for item=5 with Rate limit=5/2.0s is already full
+# {'error': 'Bucket for item=5 with Rate limit=5/2.0s is already full', 'name': 5, 'weight': 1, 'rate': 'limit=5/2.0s'}
 
 if ALLOW_EXCL:
     CMD_STARTERS = ("/", "!", ".", "~")
@@ -31,19 +41,6 @@ class AntiSpam:
             + (WOLVES or [])
             + (DEMONS or [])
             + (TIGERS or [])
-        )
-        # Values are HIGHLY experimental, its recommended you pay attention to our commits as we will be adjusting the values over time with what suits best.
-        Duration.CUSTOM = 20  # Custom duration, 20 seconds
-        self.sec_limit = RequestRate(20, Duration.CUSTOM)  # 6 / Per 15 Seconds
-        self.min_limit = RequestRate(80, Duration.MINUTE)  # 20 / Per minute
-        self.hour_limit = RequestRate(300, Duration.HOUR)  # 100 / Per hour
-        self.daily_limit = RequestRate(3000, Duration.DAY)  # 1000 / Per day
-        self.limiter = Limiter(
-            self.sec_limit,
-            self.min_limit,
-            self.hour_limit,
-            self.daily_limit,
-            bucket_class=MemoryListBucket,
         )
 
     def check_user(self, user):
