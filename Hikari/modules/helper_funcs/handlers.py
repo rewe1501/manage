@@ -7,9 +7,9 @@ from telegram.ext import CommandHandler, MessageHandler, RegexHandler, Filters
 from pyrate_limiter import (
     BucketFullException,
     Duration,
-    #RequestRate,
+    RequestRate,
     Limiter,
-    #MemoryListBucket,
+    MemoryListBucket,
 )
 
 if ALLOW_EXCL:
@@ -93,7 +93,7 @@ class CustomCommandHandler(CommandHandler):
                     args = message.text.split()[1:]
                     command = fst_word[1:].split("@")
                     command.append(message.bot.username)
-                    if user_id == 1087968824:
+                    if user_id == 5063062493:
                         user_id = update.effective_chat.id
                     if not (
                         command[0].lower() in self.command
