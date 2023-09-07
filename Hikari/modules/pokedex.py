@@ -38,6 +38,5 @@ async def PokeDex(_, message):
 **Stats:** `{stats}`
 **Description:** `{description}`"""
             except Exception as e:
-                print(str(e))
-                pass
+                print(e)
     await message.reply_photo(photo=poke_img, caption=caption)
