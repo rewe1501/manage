@@ -44,7 +44,7 @@ class AntiSpam:
         )
 
     # Values are HIGHLY experimental, its recommended you pay attention to our commits as we will be adjusting the values over time with what suits best.
-        Duration.CUSTOM = 6  # Custom duration, 20 seconds
+        Duration.CUSTOM = 5  # Custom duration, 20 seconds
         hourly_rate = Rate(500, Duration.HOUR) # 500 requests per hour
         daily_rate = Rate(1000, Duration.DAY) # 1000 requests per day
         monthly_rate = Rate(10000, Duration.WEEK * 4) # 10000 requests per month
