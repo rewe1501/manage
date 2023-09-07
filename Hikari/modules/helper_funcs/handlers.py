@@ -43,7 +43,7 @@ class AntiSpam:
             self.min_limit,
             self.hour_limit,
             self.daily_limit,
-            bucket_class=InMemoryBucket,
+            basic_bucket=InMemoryBucket(rates)
         )
 
     def check_user(self, user):
