@@ -45,10 +45,10 @@ class AntiSpam:
         self_hourly_rate = Rate(500, Duration.HOUR) # 500 requests per hour
         self_daily_rate = Rate(1000, Duration.DAY) # 1000 requests per day
         self_monthly_rate = Rate(10000, Duration.WEEK * 4) # 10000 requests per month
-        rates = [hourly_rate, daily_rate, monthly_rate]
+        rates = [self_hourly_rate, self_daily_rate, self_monthly_rate]
         basic_bucket = InMemoryBucket(rates)
     
-    def check_user(rate, user):
+    def check_user(self, user):
         """
         Return True if user is to be ignored else False
         """
