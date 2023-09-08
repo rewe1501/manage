@@ -5,21 +5,7 @@ from Hikari import DEV_USERS, DRAGONS, DEMONS, TIGERS, WOLVES
 from telegram import Update
 from telegram.ext import CommandHandler, MessageHandler, RegexHandler, Filters
 from pyrate_limiter import Duration, Rate, InMemoryBucket, Limiter, BucketFullException
-from pyrate_limiter import InMemoryBucket, RedisBucket
 
-basic_bucket = InMemoryBucket(rates)
-
-# Or, using redis
-from redis import Redis
-
-redis_connection = Redis(host='localhost')
-redis_bucket = RedisBucket.init(rates, redis_connection, "my-bucket-name")
-
-# Async Redis would work too!
-from redis.asyncio import Redis
-
-redis_connection = Redis(host='localhost')
-redis_bucket = await RedisBucket.init(rates, redis_connection, "my-bucket-name")
 rate = Rate(5, Duration.SECOND * 2)
 limiter = Limiter(rate)
 
@@ -57,11 +43,11 @@ class AntiSpam:
             + (TIGERS or [])
         )
         hourly_rate = Rate(500, Duration.HOUR) # 500 requests per hour
-daily_rate = Rate(1000, Duration.DAY) # 1000 requests per day
-monthly_rate = Rate(10000, Duration.WEEK * 4) # 10000 requests per month
-
-rates = [hourly_rate, daily_rate, monthly_rate]
-
+        daily_rate = Rate(1000, Duration.DAY) # 1000 requests per day
+        monthly_rate = Rate(10000, Duration.WEEK * 4) # 10000 requests per month
+        rates = [hourly_rate, daily_rate, monthly_rate]
+        basic_bucket = InMemoryBucket(rate)
+    
     def check_user(self, user):
         """
         Return True if user is to be ignored else False
