@@ -4,13 +4,37 @@ from Hikari import DEV_USERS, DRAGONS, DEMONS, TIGERS, WOLVES
 
 from telegram import Update
 from telegram.ext import CommandHandler, MessageHandler, RegexHandler, Filters
-from pyrate_limiter import (
-    BucketFullException,
-    Duration,
-    Rate,
-    Limiter,
-    InMemoryBucket,
-)
+from pyrate_limiter import Duration, Rate, InMemoryBucket, Limiter, BucketFullException
+from pyrate_limiter import InMemoryBucket, RedisBucket
+
+basic_bucket = InMemoryBucket(rates)
+
+# Or, using redis
+from redis import Redis
+
+redis_connection = Redis(host='localhost')
+redis_bucket = RedisBucket.init(rates, redis_connection, "my-bucket-name")
+
+# Async Redis would work too!
+from redis.asyncio import Redis
+
+redis_connection = Redis(host='localhost')
+redis_bucket = await RedisBucket.init(rates, redis_connection, "my-bucket-name")
+rate = Rate(5, Duration.SECOND * 2)
+limiter = Limiter(rate)
+
+# Or you can pass multiple rates
+# rates = [Rate(5, Duration.SECOND * 2), Rate(10, Duration.MINUTE)]
+# limiter = Limiter(rates)
+
+for request in range(6):
+    try:
+        limiter.try_acquire(request)
+    except BucketFullException as err:
+        print(err)
+        print(err.meta_info)
+# Bucket for item=5 with Rate limit=5/2.0s is already full
+# {'error': 'Bucket for item=5 with Rate limit=5/2.0s is already full', 'name': 5, 'weight': 1, 'rate': 'limit=5/2.0s'}
 
 if ALLOW_EXCL:
     CMD_STARTERS = ("/", "!", ".", "~")
@@ -32,18 +56,11 @@ class AntiSpam:
             + (DEMONS or [])
             + (TIGERS or [])
         )
-        # Values are HIGHLY experimental, its recommended you pay attention to our commits as we will be adjusting the values over time with what suits best.
-        Duration.CUSTOM = 15  # Custom duration, 15 seconds
-        self.sec_limit = Rate(6, Duration.CUSTOM)  # 6 / Per 15 Seconds
-        self.min_limit = Rate(20, Duration.MINUTE)  # 20 / Per minute
-        self.hour_limit = Rate(100, Duration.HOUR)  # 100 / Per hour
-        self.daily_limit = Rate(1000, Duration.DAY)  # 1000 / Per day
-        self.limiter = Limiter(
-            self.sec_limit,
-            self.min_limit,
-            self.hour_limit,
-            self.daily_limit,
-        )
+        hourly_rate = Rate(500, Duration.HOUR) # 500 requests per hour
+daily_rate = Rate(1000, Duration.DAY) # 1000 requests per day
+monthly_rate = Rate(10000, Duration.WEEK * 4) # 10000 requests per month
+
+rates = [hourly_rate, daily_rate, monthly_rate]
 
     def check_user(self, user):
         """
