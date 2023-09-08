@@ -7,7 +7,6 @@ from telegram.ext import CommandHandler, MessageHandler, RegexHandler, Filters
 from pyrate_limiter import Duration, Rate, InMemoryBucket, Limiter, BucketFullException
 
 rate = Rate(5, Duration.SECOND * 2)
-limiter = Limiter(rate)
 
 # Or you can pass multiple rates
 # rates = [Rate(5, Duration.SECOND * 2), Rate(10, Duration.MINUTE)]
@@ -35,6 +34,7 @@ else:
 
 class AntiSpam:
     def __init__(self):
+        limiter = Limiter(rate)
         self.whitelist = (
             (DEV_USERS or [])
             + (DRAGONS or [])
@@ -48,7 +48,7 @@ class AntiSpam:
         rates = [hourly_rate, daily_rate, monthly_rate]
         basic_bucket = InMemoryBucket(rates)
     
-    def check_user(self, user):
+    def check_user(rate, user):
         """
         Return True if user is to be ignored else False
         """
