@@ -4,23 +4,13 @@ from Hikari import DEV_USERS, DRAGONS, DEMONS, TIGERS, WOLVES
 
 from telegram import Update
 from telegram.ext import CommandHandler, MessageHandler, RegexHandler, Filters
-from pyrate_limiter import Duration, Rate, InMemoryBucket, Limiter, BucketFullException
-
-rate = Rate(5, Duration.SECOND * 2)
-limiter = Limiter(rate)
-
-# Or you can pass multiple rates
-# rates = [Rate(5, Duration.SECOND * 2), Rate(10, Duration.MINUTE)]
-# limiter = Limiter(rates)
-
-for request in range(6):
-    try:
-        limiter.try_acquire(request)
-    except BucketFullException as err:
-        print(err)
-        print(err.meta_info)
-# Bucket for item=5 with Rate limit=5/2.0s is already full
-# {'error': 'Bucket for item=5 with Rate limit=5/2.0s is already full', 'name': 5, 'weight': 1, 'rate': 'limit=5/2.0s'}
+from pyrate_limiter import (
+    BucketFullException,
+    Duration,
+    RequestRate,
+    Limiter,
+    MemoryListBucket,
+)
 
 if ALLOW_EXCL:
     CMD_STARTERS = ("/", "!", ".", "~")
@@ -42,12 +32,20 @@ class AntiSpam:
             + (DEMONS or [])
             + (TIGERS or [])
         )
-        self_hourly_rate = Rate(500, Duration.HOUR) # 500 requests per hour
-        self_daily_rate = Rate(1000, Duration.DAY) # 1000 requests per day
-        self_monthly_rate = Rate(10000, Duration.WEEK * 4) # 10000 requests per month
-        rates = [self_hourly_rate, self_daily_rate, self_monthly_rate]
-        basic_bucket = InMemoryBucket(rates)
-    
+        # Values are HIGHLY experimental, its recommended you pay attention to our commits as we will be adjusting the values over time with what suits best.
+        Duration.CUSTOM = 15  # Custom duration, 15 seconds
+        self.sec_limit = RequestRate(6, Duration.CUSTOM)  # 6 / Per 15 Seconds
+        self.min_limit = RequestRate(20, Duration.MINUTE)  # 20 / Per minute
+        self.hour_limit = RequestRate(100, Duration.HOUR)  # 100 / Per hour
+        self.daily_limit = RequestRate(1000, Duration.DAY)  # 1000 / Per day
+        self.limiter = Limiter(
+            self.sec_limit,
+            self.min_limit,
+            self.hour_limit,
+            self.daily_limit,
+            bucket_class=MemoryListBucket,
+        )
+
     def check_user(self, user):
         """
         Return True if user is to be ignored else False
@@ -95,7 +93,7 @@ class CustomCommandHandler(CommandHandler):
                     args = message.text.split()[1:]
                     command = fst_word[1:].split("@")
                     command.append(message.bot.username)
-                    if user_id == 5063062493:
+                    if user_id == 961659670:
                         user_id = update.effective_chat.id
                     if not (
                         command[0].lower() in self.command
