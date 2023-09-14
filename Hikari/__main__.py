@@ -99,12 +99,12 @@ buttons = [
     [
         InlineKeyboardButton(text="sᴜᴘᴘᴏʀᴛ", url="t.me/kazusupportgrp"
         ),
-        InlineKeyboardButton(text="ᴄʜᴀɴɴᴇʟ", url="t.me/Html12text"
+        InlineKeyboardButton(text="ᴄʜᴀɴɴᴇʟ", url="t.me/KazuxProjects"
         ),
     ],
     [
         InlineKeyboardButton(
-            text="ᴏᴡɴᴇʀ", url="t.me/disinikazu"
+            text="ᴏᴡɴᴇʀ", url="t.me/inikazu"
         ),
     ],
     [
