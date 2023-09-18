@@ -56,7 +56,8 @@ def clean_blue_text_must_click(update: Update, context: CallbackContext):
             command = fst_word[1:].split("@")
             chat = update.effective_chat
 
-            if ignored := sql.is_command_ignored(chat.id, command[0]):
+            ignored = sql.is_command_ignored(chat.id, command[0])
+            if ignored:
                 return
 
             if command[0] not in command_list:
@@ -74,21 +75,28 @@ def set_blue_text_must_click(update: Update, context: CallbackContext):
         val = args[0].lower()
         if val in ("off", "no"):
             sql.set_cleanbt(chat.id, False)
-            reply = f"Bluetext cleaning has been disabled for <b>{html.escape(chat.title)}</b>"
+            reply = "Bluetext cleaning has been disabled for <b>{}</b>".format(
+                html.escape(chat.title),
+            )
             message.reply_text(reply, parse_mode=ParseMode.HTML)
 
         elif val in ("yes", "on"):
             sql.set_cleanbt(chat.id, True)
-            reply = f"Bluetext cleaning has been enabled for <b>{html.escape(chat.title)}</b>"
+            reply = "Bluetext cleaning has been enabled for <b>{}</b>".format(
+                html.escape(chat.title),
+            )
             message.reply_text(reply, parse_mode=ParseMode.HTML)
 
         else:
-            reply = "Argumen tidak valid. Nilai yang diterima adalah 'yes', 'on', 'no', 'off'"
+            reply = "Invalid argument.Accepted values are 'yes', 'on', 'no', 'off'"
             message.reply_text(reply)
     else:
         clean_status = sql.is_enabled(chat.id)
         clean_status = "Enabled" if clean_status else "Disabled"
-        reply = f"Bluetext cleaning for <b>{html.escape(chat.title)}</b> : <b>{clean_status}</b>"
+        reply = "Bluetext cleaning for <b>{}</b> : <b>{}</b>".format(
+            html.escape(chat.title),
+            clean_status,
+        )
         message.reply_text(reply, parse_mode=ParseMode.HTML)
 
 
@@ -99,8 +107,11 @@ def add_bluetext_ignore(update: Update, context: CallbackContext):
     args = context.args
     if len(args) >= 1:
         val = args[0].lower()
-        if added := sql.chat_ignore_command(chat.id, val):
-            reply = f"<b>{args[0]}</b> has been added to bluetext cleaner ignore list."
+        added = sql.chat_ignore_command(chat.id, val)
+        if added:
+            reply = "<b>{}</b> has been added to bluetext cleaner ignore list.".format(
+                args[0],
+            )
         else:
             reply = "Command is already ignored."
         message.reply_text(reply, parse_mode=ParseMode.HTML)
@@ -117,8 +128,13 @@ def remove_bluetext_ignore(update: Update, context: CallbackContext):
     args = context.args
     if len(args) >= 1:
         val = args[0].lower()
-        if removed := sql.chat_unignore_command(chat.id, val):
-            reply = f"<b>{args[0]}</b> has been removed from bluetext cleaner ignore list."
+        removed = sql.chat_unignore_command(chat.id, val)
+        if removed:
+            reply = (
+                "<b>{}</b> has been removed from bluetext cleaner ignore list.".format(
+                    args[0],
+                )
+            )
         else:
             reply = "Command isn't ignored currently."
         message.reply_text(reply, parse_mode=ParseMode.HTML)
@@ -134,8 +150,11 @@ def add_bluetext_ignore_global(update: Update, context: CallbackContext):
     args = context.args
     if len(args) >= 1:
         val = args[0].lower()
-        if added := sql.global_ignore_command(val):
-            reply = f"<b>{args[0]}</b> has been added to global bluetext cleaner ignore list."
+        added = sql.global_ignore_command(val)
+        if added:
+            reply = "<b>{}</b> has been added to global bluetext cleaner ignore list.".format(
+                args[0],
+            )
         else:
             reply = "Command is already ignored."
         message.reply_text(reply, parse_mode=ParseMode.HTML)
@@ -151,8 +170,11 @@ def remove_bluetext_ignore_global(update: Update, context: CallbackContext):
     args = context.args
     if len(args) >= 1:
         val = args[0].lower()
-        if removed := sql.global_unignore_command(val):
-            reply = f"<b>{args[0]}</b> has been removed from global bluetext cleaner ignore list."
+        removed = sql.global_unignore_command(val)
+        if removed:
+            reply = "<b>{}</b> has been removed from global bluetext cleaner ignore list.".format(
+                args[0],
+            )
         else:
             reply = "Command isn't ignored currently."
         message.reply_text(reply, parse_mode=ParseMode.HTML)
@@ -178,7 +200,7 @@ def bluetext_ignore_list(update: Update, context: CallbackContext):
             text += f" - <code>{x}</code>\n"
 
     if local_ignore_list:
-        text += "\nPerintah berikut saat ini diabaikan secara lokal dari pembersihan bluetext :\n"
+        text += "\nThe following commands are currently ignored locally from bluetext cleaning :\n"
 
         for x in local_ignore_list:
             text += f" - <code>{x}</code>\n"
@@ -193,17 +215,17 @@ def bluetext_ignore_list(update: Update, context: CallbackContext):
 
 
 __help__ = """
- Pembersih teks biru menghapus semua perintah yang dibuat-buat yang dikirim orang dalam obrolan Anda.
+*Blue text cleaner removed any made up commands that people send in your chat.*
+✗ /cleanblue - `<on/off/yes/no> clean commands after sending`
+✗ /ignoreblue - `<word> prevent auto cleaning of the command`
+✗ /unignoreblue - `<word> remove prevent auto cleaning of the command`
+✗ /listblue - `list currently whitelisted commands`
 
-❂ • /cleanblue <on/off/yes/no>*:* bersihkan perintah setelah mengirim
-❂ • /ignoreblue <kata>*:* mencegah pembersihan otomatis dari perintah
-❂ • /unignoreblue <kata>*:* hapus cegah pembersihan otomatis dari perintah
-❂ • /listblue*:* daftar perintah yang saat ini masuk daftar putih
+ *Following are Disasters only commands, admins cannot use these:*
+✗ /gignoreblue - `<word> globally ignorea bluetext cleaning of saved word across DᴇCᴏᴅᴇ.`
+✗ /ungignoreblue - `<word> remove said command from global cleaning list`
 
- *Berikut ini adalah perintah khusus Bencana, admin tidak dapat menggunakan ini:*
-
-❂ • /gignoreblue <kata>*:* secara global mengabaikan pembersihan teks biru dari kata yang disimpan di seluruh Hikari.
-❂ • /ungignoreblue <kata>*:* hapus perintah tersebut dari daftar pembersihan global
+*Maintained By : @inikazu*
 """
 
 SET_CLEAN_BLUE_TEXT_HANDLER = CommandHandler(
@@ -242,7 +264,7 @@ dispatcher.add_handler(REMOVE_CLEAN_BLUE_TEXT_GLOBAL_HANDLER)
 dispatcher.add_handler(LIST_CLEAN_BLUE_TEXT_HANDLER)
 dispatcher.add_handler(CLEAN_BLUE_TEXT_HANDLER, BLUE_TEXT_CLEAN_GROUP)
 
-__mod_name__ = "ᴄʟᴇᴀɴᴇʀ"
+__mod_name__ = "Cʟᴇᴀɴᴇʀ"
 __handlers__ = [
     SET_CLEAN_BLUE_TEXT_HANDLER,
     ADD_CLEAN_BLUE_TEXT_HANDLER,
@@ -251,4 +273,4 @@ __handlers__ = [
     REMOVE_CLEAN_BLUE_TEXT_GLOBAL_HANDLER,
     LIST_CLEAN_BLUE_TEXT_HANDLER,
     (CLEAN_BLUE_TEXT_HANDLER, BLUE_TEXT_CLEAN_GROUP),
-]
+            
