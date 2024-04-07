@@ -46,7 +46,7 @@
       "DATABASE_URL": {
          "description": "Database Postgres.",
          "required": true,
-         "value": "postgres://vhnnaczmzfneaw:a7682de86d39a6baddd47a38bf8a68b846a94379e2ec9eac1f8be7b2e3e9056b@ec2-54-228-98-132.eu-west-1.compute.amazonaws.com:5432/dde0kvqneh9nlf"
+         "value": "postgres://ekrligebpztcgn:6a249997113ea15f0c42fc183414f2d61b553495265d4982f8ff0a527636139d@ec2-34-252-169-131.eu-west-1.compute.amazonaws.com:5432/d407gkd8lh0kpp"
       },    
       "SQLALCHEMY_DATABASE_URI": {
          "description": "Your postgres sql db, empty this field if you dont have one.",
