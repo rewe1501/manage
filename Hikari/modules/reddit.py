@@ -6,7 +6,7 @@ from Hikari.utils.errors import capture_err
 __mod_name__ = "Reddit"
 
 
-@app.on_message(filters.command("reddit")
+@app.on_message(filters.command("reddit"))
 @capture_err
 async def reddit(_, message):
     if len(message.command) != 2:
