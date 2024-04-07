@@ -65,7 +65,7 @@ def _onUnMuteRequest(client, cb):
             )
 
 
-@pbot.on_message(filters.text & ~filters.private & ~filters.edited, group=1)
+@pbot.on_message(filters.text & ~filters.private, group=1)
 def _check_member(client, message):
     chat_id = message.chat.id
     if chat_db := sql.fs_settings(chat_id):
@@ -174,7 +174,7 @@ def config(client, message):
 
 __help__ = """
 *Force Subscribe:*
-⩺ Hikari dapat membisukan anggota yang tidak berlangganan saluran Anda sampai mereka berlangganan
+⩺ Kazu dapat membisukan anggota yang tidak berlangganan saluran Anda sampai mereka berlangganan
 ⩺ Saat diaktifkan, saya akan membisukan anggota yang tidak berlangganan dan menunjukkan kepada mereka tombol suarakan. When they pressed the button I will unmute them
 ⩺*Setup*
 *Hanya pencipta*
