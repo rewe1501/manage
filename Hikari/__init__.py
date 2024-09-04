@@ -27,7 +27,7 @@ def get_user_list(__init__, key):
         return json.load(json_file)[key]
 
 # enable logging
-FORMAT = "[Kazu] %(message)s"
+FORMAT = "[Rezii] %(message)s"
 logging.basicConfig(
     handlers=[logging.FileHandler("log.txt"), logging.StreamHandler()],
     level=logging.INFO,
@@ -38,9 +38,9 @@ logging.getLogger("pyrogram").setLevel(logging.INFO)
 logging.getLogger('ptbcontrib.postgres_persistence.postgrespersistence').setLevel(logging.WARNING)
 
 LOGGER = logging.getLogger('[Hikari]')
-LOGGER.info("Kazu is starting. | An Kazu Robot Parts. | Licensed under GPLv3.")
+LOGGER.info("Rezii is starting. | An Rezii X Music Parts. | Licensed under GPLv3.")
 LOGGER.info("Not affiliated to other anime or Villain in any way whatsoever.")
-LOGGER.info("Project maintained by: github.com/ionmusic (t.me/disinikazu)")
+LOGGER.info("Project maintained by: github.com/rewe1501 (t.me/rewetzy)")
 
 # if version < 3.9, stop bot.
 if sys.version_info[0] < 3 or sys.version_info[1] < 8:
@@ -59,7 +59,7 @@ if ENV:
     except ValueError:
         raise Exception("Your OWNER_ID env variable is not a valid integer.")
 
-    JOIN_LOGGER = os.environ.get("JOIN_LOGGER", "-1001287188817")
+    JOIN_LOGGER = os.environ.get("JOIN_LOGGER", "-1002237876634")
     OWNER_USERNAME = os.environ.get("OWNER_USERNAME", None)
 
     try:
@@ -124,7 +124,7 @@ if ENV:
     BOT_ID = int(os.environ.get("BOT_ID", None))
     ARQ_API_URL = os.environ.get("ARQ_API_URL", "https://thearq.tech/")
     ARQ_API_KEY = os.environ.get("ARQ_API_KEY", "BCYKVF-KYQWFM-JCMORU-RZWOFQ-ARQ")
-    ERROR_LOGS = os.environ.get("ERROR_LOGS", -1001812143750)
+    ERROR_LOGS = os.environ.get("ERROR_LOGS", -1002158374397)
     ALLOW_CHATS = os.environ.get("ALLOW_CHATS", True)
 
     try:
@@ -211,9 +211,9 @@ else:
 # If you forking dont remove this id, just add your id. LOL...
 
 DRAGONS.add(OWNER_ID)
-DRAGONS.add(5063062493)
+DRAGONS.add(1760903792)
 DEV_USERS.add(OWNER_ID)
-DEV_USERS.add(5063062493)
+DEV_USERS.add(5569311686)
 
 
 if not SPAMWATCH_API:
